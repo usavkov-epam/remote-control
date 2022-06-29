@@ -21,6 +21,8 @@ export class WSServer {
   
       duplex$.on('data', (chunk) => {
         const data = handleData(chunk);
+
+        // duplex$.write('test');
       })
     
       duplex$.on('error', () => {
