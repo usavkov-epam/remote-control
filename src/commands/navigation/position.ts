@@ -1,5 +1,7 @@
 import { getMousePos } from 'robotjs';
 
 export const position = () => {
-  return getMousePos();
+  const { x, y } = getMousePos();
+
+  return `${x},${y}`;
 }

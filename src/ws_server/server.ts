@@ -3,7 +3,7 @@ import {
   WebSocketServer,
 } from 'ws';
 
-import { handleData } from './handler'
+import { handleCommand } from '../commands';
 
 export class WSServer {
   wss;
@@ -17,12 +17,18 @@ export class WSServer {
     });
 
     this.wss.on('connection', (ws) => {
-      const duplex$ = createWebSocketStream(ws, { encoding: 'utf8' });
+      const duplex$ = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
   
       duplex$.on('data', (chunk) => {
-        const data = handleData(chunk);
+        const [command, ...args] = chunk.split(' ');
+        const result = handleCommand(command, args);
+        const response = [command, result].join(' ');
 
-        // duplex$.write('test');
+        console.log(`<- ${command} ${args.join(' ')}`);
+
+        duplex$.write(`${response} \0`, () => {
+          console.log(`-> ${response}`)
+        });
       })
     
       duplex$.on('error', () => {

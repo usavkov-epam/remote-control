@@ -1,8 +1,9 @@
 import { circle, rectangle, square } from './drawing';
 import { down, left, position, right, up } from './navigation';
+import { screenshot } from './print';
 
 interface Commands {
-  [commandName: string]: (...args: string[]) => void;
+  [commandName: string]: (...args: string[]) => string | void;
 }
 
 const commands: Commands = {
@@ -16,13 +17,13 @@ const commands: Commands = {
   draw_rectangle: rectangle,
   draw_square: square,
 
-  
+  prnt_scrn: screenshot,
 };
 
 export const handleCommand = (command: string, args: string[]) => {
   const handler = commands[command];
 
   if (handler !== undefined) {
-    handler(...args)
-  } 
+    return handler(...args);
+  }
 };
