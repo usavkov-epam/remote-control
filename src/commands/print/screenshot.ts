@@ -1,11 +1,13 @@
 import Jimp from 'jimp';
 import { getMousePos, screen } from 'robotjs';
 
+import { bgraToRgba } from './bgraToRgba';
+
 export const screenshot = async (size: string = '200') => {
   const { x, y } = getMousePos();
 
   const img = new Jimp({
-    data: screen.capture(x, y, +size, +size).image,
+    data: bgraToRgba(screen.capture(x, y, +size, +size)).image,
     height: +size,
     width: +size,
   });
