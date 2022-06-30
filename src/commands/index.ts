@@ -1,3 +1,4 @@
+import { circle, rectangle, square } from './drawing';
 import { down, left, position, right, up } from './navigation';
 
 interface Commands {
@@ -10,6 +11,12 @@ const commands: Commands = {
   mouse_left: left,
   mouse_right: right,
   mouse_position: position,
+
+  draw_circle: circle,
+  draw_rectangle: rectangle,
+  draw_square: square,
+
+  
 };
 
 export const handleCommand = (command: string, args: string[]) => {
