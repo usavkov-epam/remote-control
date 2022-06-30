@@ -3,7 +3,7 @@ import { down, left, position, right, up } from './navigation';
 import { screenshot } from './print';
 
 interface Commands {
-  [commandName: string]: (...args: string[]) => string | void;
+  [commandName: string]: (...args: string[]) => any;
 }
 
 const commands: Commands = {
@@ -20,7 +20,7 @@ const commands: Commands = {
   prnt_scrn: screenshot,
 };
 
-export const handleCommand = (command: string, args: string[]) => {
+export const handleCommand = async (command: string, args: string[]) => {
   const handler = commands[command];
 
   if (handler !== undefined) {

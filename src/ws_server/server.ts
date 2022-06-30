@@ -19,9 +19,9 @@ export class WSServer {
     this.wss.on('connection', (ws) => {
       const duplex$ = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
   
-      duplex$.on('data', (chunk) => {
+      duplex$.on('data', async (chunk) => {
         const [command, ...args] = chunk.split(' ');
-        const result = handleCommand(command, args);
+        const result = await handleCommand(command, args);
         const response = [command, result].join(' ');
 
         console.log(`<- ${command} ${args.join(' ')}`);
