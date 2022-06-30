@@ -12,6 +12,9 @@ httpServer.listen(HTTP_PORT);
 const wss = createWSServer(WS_PORT);
 
 process.on('SIGINT', () => {
+  httpServer.close(() => {
+    console.log('HTTP server is closed.');
+  })
   wss.close(() => {
     console.log('WebSocket is closed.');
     process.exit();
